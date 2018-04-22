@@ -1,34 +1,27 @@
 package ru.caprice.steps;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import cucumber.api.PendingException;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Configuration.timeout;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.*;
 
 public class CSSteps {
 
-    @Then("^I select brand (.*)$")
-    public void userSelectBrandBrand(String brand) {
-    }
-
-    @Then("^I select year (.*)$")
-    public void userSelectYearYear(Integer year)  {
-    }
-
-    @Then("^I select model (.*)$")
-    public void userSelectModelModel(String model)  {
-    }
-
-    @Then("^I enter Email (.*)$")
-    public void userEnterEmail(String email)  {
-    }
-
-    @Then("^I click button (.*)$")
-    public void userClickNextButton()  {
-
+    @Before
+    public void config(){
+        Configuration.pageLoadStrategy="none";
+        Configuration.baseUrl="https://www.carprice.ru";
+        Configuration.browser="chrome";
     }
 
     @When("^I go to the MainPage$")
@@ -36,38 +29,74 @@ public class CSSteps {
         open(baseUrl);
     }
 
+    @Then("^I select brand (.*)$")
+    public void userSelectBrand(String brand) {
+
+        $(byText("Марка")).click();
+        ElementsCollection selectValues = $$(By.className("Select-option"));
+        $(By.id("react-select-2--value")).$(".Select-input > input").setValue(brand);
+        $(".Select-option").click();
+    }
+
+    @Then("^I select year (.*)$")
+    public void userSelectYear(String year)  {
+        $(byText("Год")).click();
+        $(By.id("react-select-3--value")).$(".Select-input > input").setValue(year);
+        $(".Select-option").click();
+    }
+
+    @Then("^I select model (.*)$")
+    public void userSelectModel(String model)  {
+        $(byText("Модель")).click();
+        $(By.id("react-select-4--value")).$(".Select-input > input").setValue(model);
+        $(".Select-option").click();
+    }
+
+    @Then("^I enter Email (.*)$")
+    public void userEnterEmail(String email)  {
+        $x("//div[@class=\"evaluate__step\"]//input[@name=\"email\"]").setValue(email);
+    }
+
+    @Then("^I click button (.*)$")
+    public void userClickNextButton(String buttonText)  {
+        $x("//div[@class=\"evaluate__step\"]//button").click();
+        $(By.name("evaluateStep2")).waitUntil(Condition.visible,timeout);
+    }
+
     @When("^I select city (.*)$")
-    public void iSelectCityCity()  {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iSelectCity(String city)  {
+        $(By.name("evaluateStep2")).$(byText("Москва и МО")).click();
+        $(By.id("react-select-8--value")).$(".Select-input > input").setValue(city);
+        $(".Select-option").click();
     }
 
     @And("^I select branch (.*)$")
-    public void iSelectBranchBranch()  {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iSelectBranch(String branch)  {
+        $(By.name("evaluateStep2")).$(byText("Москва и МО")).click();
+        $(By.id("react-select-9--value")).$(".Select-input > input").setValue(branch);
+        $(".Select-option").click();
     }
 
     @And("^I select date (.*)$")
-    public void iSelectDateDate()  {
+    public void iSelectDate(String date)  {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 
     @And("^I select time (.*)$")
-    public void iSelectTimeTime()  {
+    public void iSelectTime(String time)  {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 
     @And("^I enter name (.*)$")
-    public void iEnterNameName()  {
+    public void iEnterName()  {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 
     @And("^I enter phone (.*)$")
-    public void iEnterPhonePhone()  {
+    public void iEnterPhone()  {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
