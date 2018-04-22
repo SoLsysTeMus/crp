@@ -22,4 +22,3 @@
       Examples:
         |brand      |year    | model                           | email                   |city        |branch                 | date  | time | name        | phone        |
         |BMW        |2015    | 5er VI (F10/F11/F07) Рестайлинг | d.volkovskiy@carprice.ru|Москва и Мо |1-й Митинский пер., 25 | Today | 19:00| Дмитрий     | 9645380808   |
-

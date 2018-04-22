@@ -3,6 +3,7 @@ package ru.caprice.steps;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -65,9 +66,12 @@ public class CSSteps {
 
     @When("^I select city (.*)$")
     public void iSelectCity(String city)  {
-        $(By.name("evaluateStep2")).$(byText("Москва и МО")).click();
-        $(By.id("react-select-8--value")).$(".Select-input > input").setValue(city);
-        $(".Select-option").click();
+        SelenideElement element = $(By.name("evaluateStep2")).$(By.id("react-select-8--value"));
+        if(!element.getText().equals(city) && city != null) {
+            element.click();
+            $(By.id("react-select-8--value")).$(".Select-input > input").setValue(city);
+            $(".Select-option").click();
+        }
     }
 
     @And("^I select branch (.*)$")
